@@ -34,7 +34,7 @@ def preprocess_event(cache_key=None, data=None, start_time=None, **kwargs):
         data = default_cache.get(cache_key)
 
     if data is None:
-        metrics.incr('events.failed', tags={'reason': 'cache', 'stage': 'pre'})
+        metrics.incr('events.failed.cache.pre', tags={'reason': 'cache', 'stage': 'pre'})
         error_logger.error('preprocess.failed.empty', extra={'cache_key': cache_key})
         return
 
@@ -73,7 +73,7 @@ def process_event(cache_key, start_time=None, **kwargs):
     data = default_cache.get(cache_key)
 
     if data is None:
-        metrics.incr('events.failed', tags={'reason': 'cache', 'stage': 'process'})
+        metrics.incr('events.failed.cache.process', tags={'reason': 'cache', 'stage': 'process'})
         error_logger.error('process.failed.empty', extra={'cache_key': cache_key})
         return
 
@@ -113,7 +113,7 @@ def save_event(cache_key=None, data=None, start_time=None, **kwargs):
         data = default_cache.get(cache_key)
 
     if data is None:
-        metrics.incr('events.failed', tags={'reason': 'cache', 'stage': 'post'})
+        metrics.incr('events.failed.cache.post', tags={'reason': 'cache', 'stage': 'post'})
         return
 
     project = data.pop('project')
